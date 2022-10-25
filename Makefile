@@ -5,9 +5,9 @@ FLAGS = -Wall -Wextra -Werror
 OBJ = ft_printf.o ft_functions.o
 
 %.o:%.c
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -c $< 
 
-all: $(NAME) $(LIB_FT)
+all: $(NAME)
 
 $(NAME):$(OBJ)
 	ar -rc $(NAME) $(OBJ)
