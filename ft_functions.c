@@ -6,43 +6,75 @@
 /*   By: eboulhou <eboulhou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 21:31:41 by eboulhou          #+#    #+#             */
-/*   Updated: 2022/10/25 19:14:52 by eboulhou         ###   ########.fr       */
+/*   Updated: 2022/10/26 20:44:14 by eboulhou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-void	ft_putchar(char c, int *counter)
+
+int	ft_putchar(char c)
 {
 	write (1, &c, 1);
-	counter[0]++;
-}
-void ft_putstr(char *str , int *counter)
-{
-    int i= 0;
-    if(!str)
-    {
-        write(1, "(null)", 6);
-        counter[0]+=6;
-    }else
-    {
-        while(str[i])
-        {
-            ft_putchar(str[i], counter);
-            i++;
-        }
-    }
+	return (1);
 }
 
-
-void ft_converter(unsigned long dec, char *base, int *counter, int boole)
+int	ft_putstr(char *str )
 {
-    if(!boole)
-    {
-        boole = 1;
-        write(1, "0x", 2);
-        counter[0] += 2;
-    }
-    if(dec >= 16)
-        ft_converter(dec/16, base, counter, boole);
-    ft_putchar(base[dec%16], counter);
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	if (!str)
+	{
+		write(1, "(null)", 6);
+		count += 6;
+	}
+	else
+	{
+		while (str[i])
+		{
+			count += ft_putchar(str[i]);
+			i++;
+		}
+	}
+	return (count);
+}
+
+int	ft_conv(unsigned long dec, char *base, int boole)
+{
+	int	count;
+
+	count = 0;
+	if (!boole)
+	{
+		boole = 1;
+		write(1, "0x", 2);
+		count += 2;
+	}
+	if (dec >= 16)
+		count += ft_conv(dec / 16, base, boole);
+	count += ft_putchar(base[dec % 16]);
+	return (count);
+}
+
+int	ft_itohex(long dec, char *base, char c)
+{
+	int	count;
+
+	count = 0;
+	if (c == 'X')
+	{
+		base = "0123456789ABCDEF";
+	}
+	if (dec < 0)
+	{
+		dec *= -1;
+		write(1, "-", 1);
+		count++;
+	}
+	if (dec >= 16)
+		count += ft_itohex(dec / 16, base, c);
+	count += ft_putchar(base[dec % 16]);
+	return (count);
 }

@@ -2,7 +2,7 @@ NAME = libftprintf.a
 CC = cc
 FLAGS = -Wall -Wextra -Werror
 
-OBJ = ft_printf.o ft_functions.o
+OBJ = ft_printf.o ft_functions.o ft_functions2.o
 
 %.o:%.c
 	$(CC) $(FLAGS) -c $< 
